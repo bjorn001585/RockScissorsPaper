@@ -1,3 +1,4 @@
+import java.lang.Math.abs
 import kotlin.math.floor
 
 data class Rule(val type: String, val rules: Array<String>, val score: Int) {
@@ -22,7 +23,7 @@ data class Rule(val type: String, val rules: Array<String>, val score: Int) {
     }
 }
 
-class Score(private var _you: Int = 0, private var _AI: Int = 0) {
+data class Score(private var _you: Int = 0, private var _AI: Int = 0) {
     var you: Int
         get() = _you
         set(score) { _you += score }
@@ -39,9 +40,9 @@ val rules = arrayOf(
     Rule("Проиграл", arrayOf("rock", "paper"), 1),
     Rule("Проиграл", arrayOf("scissors", "rock"), 1),
     Rule("Проиграл", arrayOf("paper", "scissors"), 1),
-    Rule("Ничья, arrayOf("rock", "rock"), 0),
-    Rule("Ничья", arrayOf("scissors", "scissors"), 0),
-    Rule("Ничья", arrayOf("paper", "paper"), 0)
+    Rule("Ничья ", arrayOf("rock", "rock"), 0),
+    Rule("Ничья ", arrayOf("scissors", "scissors"), 0),
+    Rule("Ничья ", arrayOf("paper", "paper"), 0)
 )
 
 val translateText = mapOf(
@@ -82,7 +83,7 @@ fun run(alg: String?) {
         "| ${youText}${" ".repeat(diffYouText - 2)}|\n" +
         "| ${compText}${" ".repeat(diffCompText - 2)}|\n" +
         "+------------------------------------+\n" +
-        "|${" ".repeat(diffWinText / 2)}${winText}${" ".repeat((diffWinText / 2) - 2)}|\n" +
+        "|${" ".repeat(diffWinText / 2)}${winText}${" ".repeat(floor(diffWinText / 2.25).toInt())}|\n" +
         "+------------------------------------+"
 
     println(scene)
@@ -93,7 +94,7 @@ fun main(args: Array<String>) {
     clearConsole()
     println("Выбор алгоритма:")
     println("1 - Рандом (Рандомные ответы от компа)")
-    println("2 - Невозможный (Его не возможно будет обыграть)")
+    println("2 - Сложный (Его будет сложно обыграть)")
     print("Выберите алгоритм: ")
     val alg = readLine()
 
@@ -108,11 +109,29 @@ fun random(): String {
     return items[index.toInt()]
 }
 
-fun ai(data: String?): String {
-    return when(data) {
-        "rock" -> "paper"
+data class Cache(val key: String, var value: Int)
+
+val cache = mutableListOf(
+    Cache("paper", 1),
+    Cache("scissors", 1),
+    Cache("rock", 1)
+)
+
+fun ai(key: String?): String {
+    for(index in 0 until cache.size) {
+        val c = cache[index]
+        if(c.key == key) {
+            c.value += 1
+            cache[index] = c
+        }
+    }
+
+    val list = cache.sortedByDescending { it.value }
+
+    return when(list[0].key) {
         "paper" -> "scissors"
-        else -> "rock"
+        "scissors" -> "rock"
+        else -> "paper"
     }
 }
 
