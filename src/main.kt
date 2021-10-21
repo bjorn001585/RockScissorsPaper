@@ -39,9 +39,9 @@ val rules = arrayOf(
     Rule("Проиграл", arrayOf("rock", "paper"), 1),
     Rule("Проиграл", arrayOf("scissors", "rock"), 1),
     Rule("Проиграл", arrayOf("paper", "scissors"), 1),
-    Rule("Не чья", arrayOf("rock", "rock"), 0),
-    Rule("Не чья", arrayOf("scissors", "scissors"), 0),
-    Rule("Не чья", arrayOf("paper", "paper"), 0)
+    Rule("Ничья, arrayOf("rock", "rock"), 0),
+    Rule("Ничья", arrayOf("scissors", "scissors"), 0),
+    Rule("Ничья", arrayOf("paper", "paper"), 0)
 )
 
 val translateText = mapOf(
