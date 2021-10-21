@@ -44,7 +44,7 @@ val rules = arrayOf(
     Rule("Не чья", arrayOf("paper", "paper"), 0)
 )
 
-val tarnslateText = mapOf(
+val translateText = mapOf(
     "rock" to "Камень",
     "paper" to "Бумага",
     "scissors" to "Ножницы"
@@ -63,8 +63,8 @@ fun run(alg: String?) {
     if(rule?.type == "Проиграл") { score.comp = rule.score }
 
     val scoreText = "Ваш: ${score.you} [ Счёт ] Комп: ${score.comp}"
-    val youText = "Вы выбрали: ${tarnslateText[you]}"
-    val compText = "Комп выбрал: ${tarnslateText[comp]}"
+    val youText = "Вы выбрали: ${translateText[you]}"
+    val compText = "Комп выбрал: ${translateText[comp]}"
 
     val diffScoreText = 38 - scoreText.length
     val diffYouText = 37 - youText.length
@@ -93,7 +93,7 @@ fun main(args: Array<String>) {
     clearConsole()
     println("Выбор алгоритма:")
     println("1 - Рандом (Рандомные ответы от компа)")
-    println("2 - Невозможный (Эго не возможно будет обыграть)")
+    println("2 - Невозможный (Его не возможно будет обыграть)")
     print("Выберите алгоритм: ")
     val alg = readLine()
 
